@@ -10,14 +10,10 @@ export class Block {
         this.geometry = new three.BoxGeometry(1, 1, 1);
 
         if (!!!material) {
-            console.log('bad material')
             material = new three.MeshStandardMaterial({
                 color: 0xfff000
             })
         }
-
-        console.log('this.geometry', this.geometry)
-        console.log('this.material', this.material)
 
         this.material = material;
     }
