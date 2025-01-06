@@ -1,8 +1,11 @@
 import * as three from 'three';
-// @ts-ignore
-import * as firstPerson from './src/firstPerson.ts'
+import * as firstPerson from './src/firstPerson'
+import {Block, Dirt} from './src/types'
+import {AmbientLight, DirectionalLight} from "three";
+import {handleMovement} from "./src/firstPerson";
 
 const scene = new three.Scene();
+scene.add(new AmbientLight(0xffffff, 1))
 
 const camera = new three.PerspectiveCamera(
     90,
@@ -12,21 +15,20 @@ const camera = new three.PerspectiveCamera(
 );
 camera.position.z = 5;
 
-const renderer = new three.WebGLRenderer({ antialias: true });
+const renderer = new three.WebGLRenderer({antialias: true});
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 const canvas = renderer.domElement;
 
-const geometry = new three.BoxGeometry(1, 1, 1);
-const material = new three.LineBasicMaterial({ color: 0xff0000 });
-const line = new three.Line(geometry, material);
-scene.add(line);
-scene.add((new three.Line(geometry, material)).translateZ(1))
-scene.add((new three.Line(geometry, material)).translateX(1))
-scene.add((new three.Line(geometry, material)).translateY(1))
+const block = new Dirt();
+const thing = block.getInstance();
+console.log(thing)
+scene.add(thing);
+scene.add((block.getInstance()).translateZ(1))
+scene.add((block.getInstance()).translateX(1))
+scene.add((block.getInstance()).translateY(1))
 
 const clock = new three.Clock();
-const moveSpeed = 5; // movement units per second
 
 firstPerson.setupPointerLock(camera, canvas);
 firstPerson.handleWindowResizing(camera, renderer);
@@ -35,24 +37,7 @@ firstPerson.setupKeyListeners();
 renderer.setAnimationLoop(animate);
 
 function animate() {
-    const delta = clock.getDelta(); // seconds since last frame
-
-    const forwardVector = new three.Vector3(0, 0, -1);
-    const rightVector   = new three.Vector3(1, 0,  0);
-    forwardVector.applyQuaternion(camera.quaternion);
-    rightVector.applyQuaternion(camera.quaternion);
-
-    // If you want typical FPS (no vertical movement), uncomment:
-    // forwardVector.y = 0;
-    // rightVector.y = 0;
-    // forwardVector.normalize();
-    // rightVector.normalize();
-
-    const actualSpeed = moveSpeed * delta;
-    if (firstPerson.pressedKeys.w) camera.position.addScaledVector(forwardVector,  actualSpeed);
-    if (firstPerson.pressedKeys.s) camera.position.addScaledVector(forwardVector, -actualSpeed);
-    if (firstPerson.pressedKeys.a) camera.position.addScaledVector(rightVector,   -actualSpeed);
-    if (firstPerson.pressedKeys.d) camera.position.addScaledVector(rightVector,    actualSpeed);
+    handleMovement(camera, clock);
 
     renderer.render(scene, camera);
 }

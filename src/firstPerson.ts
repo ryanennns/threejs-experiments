@@ -1,5 +1,6 @@
 import * as three from "three";
 
+const moveSpeed = 5; // movement units per second
 // Store yaw & pitch in degrees or radians
 let yaw = 0;
 let pitch = 0;
@@ -65,4 +66,19 @@ export function setupKeyListeners(): void {
         'keyup',
         (event: KeyboardEvent) => pressedKeys[event.key.toLowerCase()] = false
     );
+}
+
+export function handleMovement(camera: three.Camera, clock: three.Clock) {
+    const delta = clock.getDelta(); // seconds since last frame
+
+    const forwardVector = new three.Vector3(0, 0, -1);
+    const rightVector = new three.Vector3(1, 0, 0);
+    forwardVector.applyQuaternion(camera.quaternion);
+    rightVector.applyQuaternion(camera.quaternion);
+
+    const actualSpeed = moveSpeed * delta;
+    if (pressedKeys.w) camera.position.addScaledVector(forwardVector, actualSpeed);
+    if (pressedKeys.s) camera.position.addScaledVector(forwardVector, -actualSpeed);
+    if (pressedKeys.a) camera.position.addScaledVector(rightVector, -actualSpeed);
+    if (pressedKeys.d) camera.position.addScaledVector(rightVector, actualSpeed);
 }
