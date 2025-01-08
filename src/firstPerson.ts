@@ -1,7 +1,6 @@
 import * as three from "three";
 
-const moveSpeed: number = 5; // movement units per second
-// Store yaw & pitch in degrees or radians
+const moveSpeed: number = 50; // movement units per second
 let yaw: number = 0;
 let pitch: number = 0;
 
