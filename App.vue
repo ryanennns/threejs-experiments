@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import * as three from 'three';
-import {AmbientLight} from 'three';
 import {markRaw, onMounted, onUpdated, ref} from "vue";
 import {Ref} from "vue";
+import * as three from 'three';
 import * as firstPerson from './src/firstPerson'
 import {NoiseGenerator} from "./src/NoiseGenerator";
 
@@ -23,7 +22,7 @@ const renderer = markRaw(new three.WebGLRenderer({antialias: true}));
 const displacementScale: Ref<number> = ref(1)
 
 onMounted(() => {
-  scene.add(new AmbientLight(0xffffff, 1))
+  scene.add(new three.AmbientLight(0xffffff, 1))
   scene.background = new three.CubeTextureLoader().load([
     'assets/skyboxes/day/Daylight_Box_Right.png',  // +X
     'assets/skyboxes/day/Daylight_Box_Left.png',   // -X
