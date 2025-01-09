@@ -67,7 +67,6 @@ export class NoiseGenerator {
         }
 
         const texture = new THREE.DataTexture(data, width, height, THREE.RGBAFormat);
-        texture.image
         texture.needsUpdate = true;
         return texture;
     }
