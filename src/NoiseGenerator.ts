@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import * as three from 'three';
 
 export class NoiseGenerator {
     private readonly seed: number;
@@ -74,15 +74,15 @@ export class NoiseGenerator {
         return data.map((thing: number) => thing - min);
     }
 
-    public noiseToTexture(width: number, height: number, data: Uint8Array): THREE.DataTexture {
+    public noiseToTexture(width: number, height: number, data: Uint8Array): three.DataTexture {
         data = this.clampNoise(data)
-        const texture = new THREE.DataTexture(data, width, height, THREE.RGBAFormat);
+        const texture = new three.DataTexture(data, width, height, three.RGBAFormat);
         texture.needsUpdate = true;
 
         return texture;
     }
 
-    public generateTexture(width: number = 64, height: number = 64): THREE.DataTexture {
+    public generateTexture(width: number = 64, height: number = 64): three.DataTexture {
         return this.noiseToTexture(64, 64, this.generateNoise());
     }
 }
