@@ -60,7 +60,6 @@ const refreshDisplacementMap = () => {
   let s = URL.createObjectURL(
       new Blob([displacementMap.image.data.buffer],
           {type: 'image'}));
-  console.log('refresh', s)
   noiseImage.value.src = s
 }
 
