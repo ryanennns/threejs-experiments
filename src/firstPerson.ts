@@ -1,6 +1,6 @@
 import * as three from "three";
 
-const moveSpeed: number = 50; // movement units per second
+let moveSpeed: number = 50; // movement units per second
 let yaw: number = 0;
 let pitch: number = 0;
 
@@ -9,6 +9,7 @@ export const pressedKeys = {
     'a': false,
     's': false,
     'd': false,
+    'shift': false,
 };
 
 export function setupPointerLock(
@@ -69,6 +70,12 @@ export function handleMovement(camera: three.Camera, clock: three.Clock) {
     const rightVector = new three.Vector3(1, 0, 0);
     forwardVector.applyQuaternion(camera.quaternion);
     rightVector.applyQuaternion(camera.quaternion);
+
+    if (pressedKeys.shift) {
+        moveSpeed = 250;
+    } else {
+        moveSpeed = 50;
+    }
 
     const actualSpeed = moveSpeed * delta;
     if (pressedKeys.w) {
