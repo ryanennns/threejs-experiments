@@ -50,7 +50,7 @@ export class NoiseGenerator {
         return total / maxValue; // Normalize
     }
 
-    public generateTexture(width: number = 64, height: number = 64): THREE.DataTexture {
+    public generateNoise(width: number = 64, height: number = 64): Uint8Array {
         const size = width * height;
         const data = new Uint8Array(size * 4); // RGBA format
 
@@ -66,8 +66,23 @@ export class NoiseGenerator {
             }
         }
 
+        return data;
+    }
+
+    public clampNoise(data: Uint8Array): Uint8Array {
+        let min = Math.min(...data);
+        return data.map((thing: number) => thing - min);
+    }
+
+    public noiseToTexture(width: number, height: number, data: Uint8Array): THREE.DataTexture {
+        data = this.clampNoise(data)
         const texture = new THREE.DataTexture(data, width, height, THREE.RGBAFormat);
         texture.needsUpdate = true;
+
         return texture;
+    }
+
+    public generateTexture(width: number = 64, height: number = 64): THREE.DataTexture {
+        return this.noiseToTexture(64, 64, this.generateNoise());
     }
 }
