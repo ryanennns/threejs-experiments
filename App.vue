@@ -28,7 +28,7 @@ onMounted(() => {
 })
 
 onUpdated(() => {
-  groundMaterial.displacementScale = displacementScale.value * 5
+  groundMaterial.displacementScale = displacementScale.value
 })
 
 const animate = (): void => {
@@ -68,8 +68,8 @@ const initGroundMesh = (): void => {
 <template>
   <div style="position: fixed;">
     <img ref="noiseImage" alt="noise"/>
-    <input type="range" v-model="displacementScale">
-    <input type="button" @click="refreshDisplacementMap">
+    <input type="range" min="-750" max="750" value="0" v-model="displacementScale">
+    <input type="button" @click="refreshDisplacementMap" value="refresh">
   </div>
   <div ref="threejsMountPoint"></div>
 </template>

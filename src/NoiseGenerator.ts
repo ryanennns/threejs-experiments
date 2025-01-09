@@ -83,6 +83,6 @@ export class NoiseGenerator {
     }
 
     public generateTexture(width: number = 64, height: number = 64): three.DataTexture {
-        return this.noiseToTexture(64, 64, this.generateNoise());
+        return this.noiseToTexture(width, height, this.generateNoise());
     }
 }
