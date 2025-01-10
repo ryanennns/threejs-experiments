@@ -2,6 +2,7 @@
   "dependencies": {
     "@vitejs/plugin-vue": "^5.2.1",
     "@vue/compiler-sfc": "^3.5.13",
+    "lil-gui": "^0.20.0",
     "three": "^0.172.0",
     "vue": "^3.5.13"
   },

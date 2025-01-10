@@ -70,8 +70,10 @@ export class NoiseGenerator {
     }
 
     public clampNoise(data: Uint8Array): Uint8Array {
-        let min = Math.min(...data);
-        return data.map((thing: number) => thing - min);
+        const min = Math.min(...data);
+        const max = Math.max(...data);
+        const delta = max - min;
+        return data.map((thing: number) => (thing - min));
     }
 
     public noiseToTexture(width: number, height: number, data: Uint8Array): three.DataTexture {
