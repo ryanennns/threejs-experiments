@@ -50,6 +50,8 @@ export function handleWindowResizing(
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
     }, false);
+
+    renderer.setPixelRatio(Math.min(2, window.devicePixelRatio));
 }
 
 export function setupKeyListeners(): void {
